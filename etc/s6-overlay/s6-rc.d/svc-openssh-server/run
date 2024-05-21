@@ -1,0 +1,12 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+USER_NAME=${USER_NAME:-abc}
+
+/usr/libexec/openssh/sshd-keygen rsa
+/usr/libexec/openssh/sshd-keygen ed25519
+/usr/libexec/openssh/sshd-keygen ecdsa
+
+exec 2>&1 \
+    s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${LISTEN_PORT:-2222}" \
+        /usr/sbin/sshd -D -e
