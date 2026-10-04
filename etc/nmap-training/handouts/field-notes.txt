@@ -1,0 +1,47 @@
+NMAP SCRIPTING – LAB-NOTIZEN
+
+Übungsnetz: 172.28.50.0/24, DNS-Zone: shop.test
+Browser-Zugang: separates Zugangsnetz, kein Teil des Scanauftrags.
+Vor jedem Broadcast-Test das Interface mit der eigenen 172.28.50.101–107 wählen.
+Die IP-Adressen sind Labordaten. Aktive Übungen verwenden dieses interne Netz.
+
+REFERENZ-INVENTAR UND ERWARTETE KONFIGURATION
+
+172.28.50.10  dns               DHCP/DNS des Shops
+  Erwartet: DHCP-Server .10; angebotene DNS-Adresse .10; Router .1.
+  .1 ist die Lab-Bridge, kein Nachweis eines funktionierenden Internetzugangs.
+172.28.50.21  appliance-managed Verwaltetes Webgerät
+  Erwartet: /maintenance/ verlangt Anmeldung (HTTP 401 ohne Zugangsdaten).
+172.28.50.30  nas               Gemeinsamer Dateispeicher
+  Erwartet: SMBv1 deaktiviert; kein anonymer Zugriff auf Konfigurationsdateien.
+172.28.50.40  snmp              Netzwerkgerät für Inventarisierung
+  Erwartet: Community "public" soll keine Systeminformationen offenlegen.
+172.28.50.50  ftp               Wartungs-Dateiserver
+  Erwartet: Verzeichnisinhalte nur nach Anmeldung sichtbar.
+172.28.50.101–107               Sieben Training-Clients
+
+Die MAC-Adressen der Labordienste sind festgelegte Übungswerte. Im echten Einsatz
+aktuelle MAC-/DHCP-/Switch-Daten aufnehmen, nicht Herstellername als Beweis behandeln.
+Zusätzliche IPs/MACs mit Discovery und Protokollantworten technisch zuordnen.
+
+TECHNISCHES SCAN-PROTOKOLL
+
+Zeitpunkt / Zeitzone:
+Scanstandort / VLAN / Interface / Source IP:
+Target Specification / Inputliste / Excludes:
+Target-IP / MAC / Hostname:
+Ausgeführter Befehl und Nmap-Version:
+Discovery-Probes / Host-State / Host-Reason:
+Scanverfahren / Protokoll / Portliste:
+Port-State / Port-Reason:
+Service-Match / Produkt / Version / Tunnel / CPE:
+NSE Scripts / Script-Argumente / Outputfelder:
+Timing / Retries / Host- und Script-Timeouts:
+Fehlermeldungen / nicht ausgeführte Rules / abgebrochene Phasen:
+Ausgabedateien / PCAP / Capture-Interface / Capture-Filter:
+Packet Count / Messdauer / Pakete pro Sekunde / Byte-Rate:
+Kontrollscan / geänderte Option / beobachtete Differenz:
+
+Host-State, Port-State und Service-Match sind getrennte Ergebnisse.
+Keine Script-Ausgabe: Rule, Portauswahl, Argumente, Timeouts und Debugoutput prüfen.
+Ein Nmap Packet Trace ist kein vollständiger PCAP am Interface.

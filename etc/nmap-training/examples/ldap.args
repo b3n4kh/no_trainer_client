@@ -1,0 +1,8 @@
+ldap.username="uid=admin,ou=people,dc=shop,dc=test"
+ldap.password=lab-admin-password
+ldap.base="dc=shop,dc=test"
+ldap.qfilter=custom
+ldap.searchattrib=objectClass
+ldap.searchvalue=person
+ldap.attrib=cn
+ldap.maxobjects=5

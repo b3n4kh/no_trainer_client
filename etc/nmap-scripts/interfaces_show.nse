@@ -20,10 +20,6 @@ prerule = function()
     return nil
   end
 
-  if not target.ALLOW_NEW_TARGETS then
-	  nmap.log_write("stdout", "--script-args=newtargets to add interfaces CIDR as target")
-  end
-
   if nmap.address_family() ~= 'inet' then
     stdnse.debug1("is IPv4 compatible only.")
     return false
@@ -51,12 +47,6 @@ action = function()
     end
   end
 
-  local manual_selected = nmap.get_interface()
-  if manual_selected then
-	  nmap.log_write("stdout", "Interface manual selected")
-	  selected_interface = nmap.get_interface_info(manual_selected)
-  end
-
   if not selected_interface then
     stdnse.print_debug(1, "No valid interface found")
     return "No valid interface found"
@@ -74,6 +64,5 @@ action = function()
 
   stdnse.print_debug(1, "Selected interface address: %s", cidr)
 
-  target.add(cidr)
   return "Address: " .. cidr
 end

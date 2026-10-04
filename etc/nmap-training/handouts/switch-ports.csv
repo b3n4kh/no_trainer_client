@@ -1,0 +1,8 @@
+fixture_type,switch,port,mac,vlan,location
+fictional customer record,shop-switch,Gi1/0/1,02:42:ac:1c:32:0a,50,Service provider cabinet
+fictional customer record,shop-switch,Gi1/0/8,02:42:ac:1c:32:14,50,Rear entrance annex
+fictional customer record,shop-switch,Gi1/0/9,02:42:ac:1c:32:15,50,Service provider cabinet
+fictional customer record,shop-switch,Gi1/0/12,02:42:ac:1c:32:1e,50,Stockroom
+fictional customer record,shop-switch,Gi1/0/13,02:42:ac:1c:32:28,50,Stockroom
+fictional customer record,shop-switch,Gi1/0/14,02:42:ac:1c:32:32,50,Stockroom
+fictional customer record,shop-switch,Gi1/0/18,02:42:ac:1c:32:42,50,Temporary counter

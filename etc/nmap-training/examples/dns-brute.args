@@ -1,0 +1,3 @@
+dns-brute.domain=shop.test
+dns-brute.hostlist=/opt/nmap-training/handouts/dns-hosts.txt
+dns-brute.threads=1

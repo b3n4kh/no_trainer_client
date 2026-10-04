@@ -1,0 +1,6 @@
+asset_id,ip,mac,role,owner,expected_services
+SHOP-DNS-01,172.28.50.10,02:42:ac:1c:32:0a,DHCP and DNS,Service provider,DNS53 DHCP67
+SHOP-CTRL-01,172.28.50.21,02:42:ac:1c:32:15,Managed appliance,Service provider,HTTP80
+SHOP-NAS-01,172.28.50.30,02:42:ac:1c:32:1e,Stockroom NAS,Shop manager,SMB139 SMB445 mDNS5353
+SHOP-MON-01,172.28.50.40,02:42:ac:1c:32:28,Stockroom monitoring host,Service provider,SNMP161
+SHOP-FTP-01,172.28.50.50,02:42:ac:1c:32:32,Inventory file export,Shop manager,FTP21
