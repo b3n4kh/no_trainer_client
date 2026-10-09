@@ -1,0 +1,6 @@
+# This headless container has no logind session for the graphical auth agent.
+# Command-line administration uses the existing sudo access.
+[Desktop Entry]
+Type=Application
+Name=XFCE PolKit
+Hidden=true

@@ -7,6 +7,12 @@ Include /etc/ssh/sshd_config.d/*.conf
 # semanage port -a -t ssh_port_t -p tcp #PORTNUMBER
 #
 Port 2222
+HostKey /etc/ssh/hostkeys/ssh_host_ed25519_key
+HostKey /etc/ssh/hostkeys/ssh_host_ecdsa_key
+HostKey /etc/ssh/hostkeys/ssh_host_rsa_key
+PermitRootLogin no
+AllowUsers abc
+PasswordAuthentication yes
 #AddressFamily any
 #ListenAddress 0.0.0.0
 

@@ -1,0 +1,58 @@
+# Load the seven named AppArmor profiles on the VM before applying this override.
+services:
+  client1:
+    security_opt:
+      - seccomp=unconfined
+      - apparmor=nmap-training-client1
+    ulimits:
+      core:
+        soft: 0
+        hard: 0
+  client2:
+    security_opt:
+      - seccomp=unconfined
+      - apparmor=nmap-training-client2
+    ulimits:
+      core:
+        soft: 0
+        hard: 0
+  client3:
+    security_opt:
+      - seccomp=unconfined
+      - apparmor=nmap-training-client3
+    ulimits:
+      core:
+        soft: 0
+        hard: 0
+  client4:
+    security_opt:
+      - seccomp=unconfined
+      - apparmor=nmap-training-client4
+    ulimits:
+      core:
+        soft: 0
+        hard: 0
+  client5:
+    security_opt:
+      - seccomp=unconfined
+      - apparmor=nmap-training-client5
+    ulimits:
+      core:
+        soft: 0
+        hard: 0
+  client6:
+    security_opt:
+      - seccomp=unconfined
+      - apparmor=nmap-training-client6
+    ulimits:
+      core:
+        soft: 0
+        hard: 0
+  client7:
+    security_opt:
+      - seccomp=unconfined
+      - apparmor=nmap-training-client7
+    ulimits:
+      core:
+        soft: 0
+        hard: 0

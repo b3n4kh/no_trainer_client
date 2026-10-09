@@ -69,6 +69,27 @@ fi
         assert nse_copy.read_text() == "participant NSE edits\n"
         assert (results / "targets.txt").is_symlink()
 
+        # Exercise password initialization without changing the machine account.
+        for name, body in {
+            "chpasswd": '#!/bin/bash\ncat > "$TEST_PASSWORD_INPUT"\n',
+            "passwd": '#!/bin/bash\nprintf "%s\\n" "$*" > "$TEST_PASSWORD_LOCK"\n',
+            "s6-setuidgid": '#!/bin/bash\nexit 0\n',
+        }.items():
+            mock = scratch / name
+            mock.write_text(body)
+            mock.chmod(0o755)
+        password_input = scratch / "password-input"
+        password_lock = scratch / "password-lock"
+        initialization = (TRAINING / "init-training.sh").read_text().replace('"$NMAP_TRAINING/scripts/multicast-routes.sh"', "/usr/bin/true")
+        run_shell(initialization, {"SSH_PASSWORD": "generated-test-password", "TEST_PASSWORD_INPUT": str(password_input), "TEST_PASSWORD_LOCK": str(password_lock)})
+        assert password_input.read_text() == "abc:generated-test-password\n"
+        assert not password_lock.exists(), "Configured password must stay unlocked"
+        password_input.unlink()
+        run_shell(initialization, {"SSH_PASSWORD": "", "TEST_PASSWORD_INPUT": str(password_input), "TEST_PASSWORD_LOCK": str(password_lock)})
+        assert not password_input.exists(), "An unset SSH password must not set a password"
+        assert password_lock.read_text() == "-l abc\n", "An unset SSH password must lock the account"
+        Path(env["TEST_ROUTES"]).unlink(missing_ok=True)
+
         routes = (TRAINING / "scripts/multicast-routes.sh").read_text()
         run_shell(routes)
         route_log = Path(env["TEST_ROUTES"])
@@ -91,7 +112,7 @@ fi
                                 check=True, capture_output=True, text=True)
         assert all(line in parsed.stdout for line in ("broadcast offer", "http status", "smb dialect"))
 
-    print("Training checks passed: environment, interface selection, working copies, routes and XML.")
+    print("Training checks passed: environment, interface selection, working copies, SSH initialization, routes and XML.")
 
 
 if __name__ == "__main__":

@@ -1,5 +1,10 @@
 #!/bin/bash
 set -eu
+if [ -n "${SSH_PASSWORD:-}" ]; then
+    printf 'abc:%s\n' "$SSH_PASSWORD" | chpasswd
+else
+    passwd -l abc > /dev/null
+fi
 . /etc/profile.d/nmap-training.sh
 
 if [ -n "$SCAN_INTERFACE" ]; then

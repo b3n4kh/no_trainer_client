@@ -1,19 +1,24 @@
-FROM lscr.io/linuxserver/webtop:fedora-xfce
+FROM ghcr.io/b3n4kh/nmap:latest@sha256:d939755e48a65b8c2b0cc2262b0795665dd5bbe67b8ce373774f1b84e834140f AS zenmap
+FROM lscr.io/linuxserver/webtop:fedora-xfce@sha256:953cf5572a4834bb28b127e2253fd3f1cbc4fead64ff96c5c8d066c281061d8a
 
 RUN dnf update -y && dnf install -y man man-pages nmap openssh-server iputils iproute vim \
     python3 wireshark-cli tcpdump curl bind-utils nmap-ncat git samba-client postgresql diffutils
 COPY /etc /etc
 RUN ln -s /etc/nmap-training /opt/nmap-training \
     && mkdir -p /custom-cont-init.d \
-    && ln -s /etc/nmap-training/init-training.sh /custom-cont-init.d/50-nmap-training.sh
+    && ln -s /etc/nmap-training/init-training.sh /custom-cont-init.d/50-nmap-training.sh \
+    && chmod -R a+rX /etc/nmap-training \
+    && chmod a+r /etc/profile.d/nmap-training.sh \
+    && chmod a+rx /etc/nmap-training/init-training.sh /etc/s6-overlay/s6-rc.d/svc-openssh-server/run \
+    && passwd -l abc
 
 ### NMAP ###
 
 RUN dnf install -y python3-pip cairo-devel pkg-config python3-devel python3-cairo python3-cairo-devel gobject-introspection-devel cairo-gobject-devel
-COPY --from=ghcr.io/b3n4kh/nmap:latest /nmap/zenmap/zenmap /usr/local/bin/zenmap
-COPY --from=ghcr.io/b3n4kh/nmap:latest /nmap/zenmap/dist/zenmap-7.95+svn-py3-none-any.whl /tmp/zenmap-7.95+svn-py3-none-any.whl
-COPY --from=ghcr.io/b3n4kh/nmap:latest /nmap/zenmap/zenmapCore/data/pixmaps/zenmap.png /usr/share/icons/zenmap.png
-COPY --from=ghcr.io/b3n4kh/nmap:latest /nmap/zenmap/install_scripts/unix/zenmap.desktop /usr/share/applications/zenmap.desktop
+COPY --from=zenmap /nmap/zenmap/zenmap /usr/local/bin/zenmap
+COPY --from=zenmap /nmap/zenmap/dist/zenmap-7.95+svn-py3-none-any.whl /tmp/zenmap-7.95+svn-py3-none-any.whl
+COPY --from=zenmap /nmap/zenmap/zenmapCore/data/pixmaps/zenmap.png /usr/share/icons/zenmap.png
+COPY --from=zenmap /nmap/zenmap/install_scripts/unix/zenmap.desktop /usr/share/applications/zenmap.desktop
 
 RUN pip install /tmp/zenmap-7.95+svn-py3-none-any.whl
 
