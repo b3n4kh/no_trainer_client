@@ -3,7 +3,7 @@
 ## Build
 
 ```bash
-podman build -f Containerfile -t ghcr.io/b3n4kh/no_trainer_client .
+podman build -f Containerfile -t ghcr.io/notrainer/no_trainer_client .
 ```
 
 
@@ -12,7 +12,7 @@ podman build -f Containerfile -t ghcr.io/b3n4kh/no_trainer_client .
 ```bash
 export PASSWORD="$(openssl rand -hex 24)"
 export SSH_PASSWORD="$PASSWORD"
-podman run -d --name=no_train_client -e CUSTOM_USER=user1 -e PASSWORD -e SSH_PASSWORD -p 127.0.0.1:3000:3000 --shm-size="1gb" ghcr.io/b3n4kh/no_trainer_client
+podman run -d --name=no_train_client -e CUSTOM_USER=user1 -e PASSWORD -e SSH_PASSWORD -p 127.0.0.1:3000:3000 --shm-size="1gb" ghcr.io/notrainer/no_trainer_client
 ```
 
 ## Nmap-Training
@@ -87,8 +87,15 @@ files separately before removing them from participant homes.
 ## Published builds
 
 The master workflow checks the training scripts, then publishes the same image
-as `ghcr.io/b3n4kh/no_trainer_client:latest`, `:master`, and `:<full commit SHA>`.
+as `ghcr.io/notrainer/no_trainer_client:latest`, `:master`, and `:<full commit SHA>`.
 Use the commit tag (or image digest) in deployments to identify the exact source.
 The webtop and Zenmap inputs are pinned to the digests tested in the live lab;
 update those pins deliberately when upgrading the base images.
 The image carries its source revision as an OCI label.
+
+The repository moved to `notrainer/no_trainer_client`. Existing clones should use
+`git remote set-url origin git@github.com:notrainer/no_trainer_client.git`.
+The old `ghcr.io/b3n4kh/no_trainer_client` package remains available for existing
+deployments. Switch their image reference only after the new package is published
+and public, or a read-only registry login is configured. The separate
+`ghcr.io/b3n4kh/nmap` Zenmap base image remains unchanged.
